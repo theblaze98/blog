@@ -5,7 +5,12 @@ import {
   Param,
   ParseUUIDPipe,
   UseGuards,
+  UploadedFile,
+  UseInterceptors,
+  Req,
+  Patch,
 } from '@nestjs/common'
+import { FileInterceptor } from '@nestjs/platform-express'
 import { ApiResponse, ApiParam, ApiTags, ApiSecurity } from '@nestjs/swagger'
 import { UserService } from './user.service'
 import { httpErrorValidation } from '@/helpers/http-error-validation'
@@ -65,6 +70,23 @@ export class UserController {
         error.status,
       )
       throw new HttpException(message, statusCode)
+    }
+  }
+
+  @UseGuards(AuthGuard)
+  @UseInterceptors(FileInterceptor('file'))
+  @Patch('upload_avatar')
+  async updateAvatar(
+    @UploadedFile() file: Express.Multer.File,
+    @Req() request,
+  ) {
+    try {
+      const { user } = request
+      const upload = await this.userService.avatarUpload(file, user.sub)
+      delete upload.password
+      return upload
+    } catch (error) {
+      return error
     }
   }
 }
