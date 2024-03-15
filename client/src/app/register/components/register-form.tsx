@@ -1,7 +1,13 @@
 'use client'
+import { useRef, useState } from 'react'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { Input, Button, Card, CardHeader, CardBody, Avatar } from '@nextui-org/react'
+import { createUser, uploadAvatar } from '@/services'
 import { useForm } from 'react-hook-form'
+import { PUBLIC_ROUTES } from '@/routes'
 
-type RegisterFormValues = {
+export type RegisterFormValues = {
 	username: string
 	email: string
 	avatarUrl: FileList
@@ -9,6 +15,9 @@ type RegisterFormValues = {
 }
 
 export const RegisterForm = () => {
+	const router = useRouter()
+	const [avatar, setAvatar] = useState('')
+	const avatarRef = useRef<HTMLInputElement>(null)
 	const {
 		register,
 		formState: { errors },
@@ -17,43 +26,90 @@ export const RegisterForm = () => {
 
 	const onSubmit = async (data: RegisterFormValues) => {
 		console.log(data)
-		const imgUrl = URL.createObjectURL(data.avatarUrl[0])
-		console.log(imgUrl)
+		const userData = await createUser(data)
+		console.log(userData)
+		localStorage.setItem('token', userData.data.token)
+		const res = await uploadAvatar(data.avatarUrl[0], userData.data.token)
+		console.log(res)
+		router.push('/')
+	}
+
+	const onChangeFile = () => {
+		const file = avatarRef.current?.files
+		if (!file) return
+		const avatarUrl = URL.createObjectURL(file[0])
+		console.log(avatarUrl)
+		setAvatar(avatarUrl)
 	}
 
 	return (
-		<div>
-			<form
-				className=''
-				onSubmit={handleSubmit(onSubmit)}>
-				<div>
-					<label htmlFor=''>Username</label>
-					<input {...register('username', { required: true, minLength: 4 })} />
-				</div>
-				<div>
-					<label htmlFor=''>Email</label>
-					<input
-						{...register('email', { required: true, minLength: 4 })}
-						type='email'
+		<Card className='max-w-sm w-full'>
+			<CardHeader>
+				<h2 className='text-2xl text-center'>Registrarse</h2>
+			</CardHeader>
+			<CardBody>
+				<form
+					className='flex gap-5 flex-col'
+					onSubmit={handleSubmit(onSubmit)}>
+					<Input
+						type='text'
+						{...register('username', { required: true, minLength: 4 })}
+						variant='bordered'
+						label='Username'
+						color='primary'
+						required
+						errorMessage={!!errors.username && 'Ingrese un username'}
 					/>
-				</div>
-				<div>
-					<label htmlFor=''>Password</label>
-					<input
-						{...register('password', { required: true, minLength: 4 })}
+					<Input
+						type='text'
+						{...register('email', {
+							required: true,
+							minLength: 4,
+							pattern: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,4})+$/,
+						})}
+						variant='bordered'
+						label='Email'
+						color='primary'
+						required
+						errorMessage={!!errors.email && 'Ingrese un email'}
+					/>
+					<Input
 						type='password'
+						{...register('password', { required: true, minLength: 4 })}
+						variant='bordered'
+						label='Contraseña'
+						color='primary'
+						required
+						errorMessage={!!errors.password && 'Ingrese un username'}
 					/>
-				</div>
-				<div>
-					<label htmlFor=''>Password</label>
-					<input
-						{...register('avatarUrl', { required: true, minLength: 4 })}
-						type='file'
-						accept='image/*'
-					/>
-				</div>
-				<button type='submit'>Registrarse</button>
-			</form>
-		</div>
+					<div>
+						<label htmlFor='avatar' className='flex gap-3 items-center cursor-pointer'>
+							<Avatar src={avatar} size='lg' />
+							<span className='text-sm text-blue-400'>Imagen de Perfil</span>
+						</label>
+						<input
+							{...register('avatarUrl', { required: true, minLength: 4 })}
+							type='file'
+							accept='image/*'
+							className='hidden'
+							id='avatar'
+							ref={avatarRef}
+							onChange={onChangeFile}
+						/>
+					</div>
+					<Button
+						type='submit'
+						color='primary'
+						onClick={handleSubmit(onSubmit)}>
+						Registrarse
+					</Button>
+					<Link
+						href={PUBLIC_ROUTES.LOGIN}
+						className='text-xs text-blue-500 text-center'>
+						Ya Tengo Cuenta
+					</Link>
+				</form>
+			</CardBody>
+		</Card>
 	)
 }

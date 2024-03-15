@@ -17,7 +17,7 @@ import { CloudinaryModule } from './cloudinary/cloudinary.module';
     JwtModule.register({
       global: true,
       secret: `${process.env.JWT_SECRET}`,
-      signOptions: { expiresIn: '2h' },
+      signOptions: { expiresIn: '90d' },
     }),
     DrizzleModule,
     UserModule,
