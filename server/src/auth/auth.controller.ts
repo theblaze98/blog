@@ -1,4 +1,12 @@
-import { Controller, Post, Body, HttpException, UsePipes } from '@nestjs/common'
+import {
+  Controller,
+  Post,
+  Body,
+  HttpException,
+  UsePipes,
+  UseInterceptors,
+  UploadedFile,
+} from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 import { UserService } from '@/user/user.service'
 import { CreateUserDto, createUserSchema } from '@/user/dto/create-user.dto'
@@ -11,26 +19,35 @@ import { comparePassword, encryptPassword } from '@/helpers/password'
 import { httpErrorValidation } from '@/helpers/http-error-validation'
 import { ZodValidationPipe } from '@/common/pipes'
 import { LoginDto, loginSchema } from './dto/login.dto'
+import { FileInterceptor } from '@nestjs/platform-express'
+import { CloudinaryService } from '@/cloudinary/cloudinary.service'
 
 @Controller('auth')
 export class AuthController {
   constructor(
     private userService: UserService,
     private jwtService: JwtService,
+    private cloudinaryService: CloudinaryService,
   ) {}
 
   @Post('register')
-  @UsePipes(new ZodValidationPipe(createUserSchema))
-  async register(@Body() newUser: CreateUserDto) {
+  @UseInterceptors(FileInterceptor('file'))
+  async register(
+    @Body(new ZodValidationPipe(createUserSchema)) newUser: CreateUserDto,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
     try {
       if (await this.userService.findOne({ email: newUser.email }))
         throw new UserAlreadyExists()
 
       const hashedPassword = await encryptPassword(newUser.password)
 
+      const { secure_url } = await this.cloudinaryService.uploadImage(file)
+
       const user = await this.userService.create({
         ...newUser,
         password: hashedPassword,
+        avatarUrl: secure_url,
       })
 
       const token = await this.jwtService.signAsync({ sub: user.id })

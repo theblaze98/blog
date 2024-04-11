@@ -8,7 +8,7 @@ import { DRIZZLE_PROVIDE } from '@/helpers'
   providers: [
     {
       provide: DRIZZLE_PROVIDE,
-      useFactory: () => {
+      useFactory: async () => {
         try {
           const db = drizzle(neonDatabaseConnection(), { schema })
           return db

@@ -2,8 +2,6 @@ import {
   Controller,
   Get,
   HttpException,
-  Param,
-  ParseUUIDPipe,
   UseGuards,
   UploadedFile,
   UseInterceptors,
@@ -55,11 +53,18 @@ export class UserController {
     type: 'string',
   })
   @UseGuards(AuthGuard)
-  @Get(':id')
-  async findOne(@Param('id', new ParseUUIDPipe({ version: '4' })) id: string) {
+  @Get('get_user_data')
+  async findOne(
+    /* @Param('id', new ParseUUIDPipe({ version: '4' })) id: string */ @Req()
+    request,
+  ) {
     try {
-      const user = await this.userService.findOne({ id })
+      const { sub } = request.user
 
+      console.log(sub)
+
+      const user = await this.userService.findOne({ id: sub })
+      console.log(user)
       if (!user) throw new UserNotFound()
 
       delete user.password
@@ -82,7 +87,9 @@ export class UserController {
   ) {
     try {
       const { user } = request
+
       const upload = await this.userService.avatarUpload(file, user.sub)
+
       delete upload.password
       return upload
     } catch (error) {

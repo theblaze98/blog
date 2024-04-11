@@ -5,32 +5,44 @@ import {
   Body,
   Get,
   UseGuards,
-  UsePipes,
+  UseInterceptors,
+  UploadedFile,
 } from '@nestjs/common'
+import { FileInterceptor } from '@nestjs/platform-express'
 import { PostService } from './post.service'
 import { AuthGuard } from '@/common/guards'
-import { RoleGuard } from '@/common/guards'
-import { Roles } from '@/common/decorators/role.decorator'
-import { ROLE } from '@/user/dto/create-user.dto'
 import { CreatePostDto, createPostSchema } from './dto/create-post.dto'
 import { ZodValidationPipe } from '@/common/pipes'
+import { CloudinaryService } from '@/cloudinary/cloudinary.service'
 
 @Controller('posts')
 export class PostController {
-  constructor(private postService: PostService) {}
+  constructor(
+    private postService: PostService,
+    private cloudinaryService: CloudinaryService,
+  ) {}
 
   @Get()
   find() {
     return this.postService.find()
   }
 
-  @Roles(ROLE.ADMIN)
-  @UseGuards(AuthGuard, RoleGuard)
+  @UseGuards(AuthGuard)
+  @UseInterceptors(FileInterceptor('file'))
   @Post('create')
-  @UsePipes(new ZodValidationPipe(createPostSchema))
-  create(@Req() request, @Body() newPost: CreatePostDto) {
+  async create(
+    @Req() request,
+    @Body(new ZodValidationPipe(createPostSchema)) newPost: CreatePostDto,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
     const { sub } = request.user
 
-    return this.postService.create({ ...newPost, authorId: sub })
+    const { secure_url } = await this.cloudinaryService.uploadImage(file)
+
+    return this.postService.create({
+      ...newPost,
+      authorId: sub,
+      imageUrl: secure_url,
+    })
   }
 }

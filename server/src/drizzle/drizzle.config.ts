@@ -9,7 +9,12 @@ export default defineConfig({
   strict: true,
   verbose: true,
   dbCredentials: {
-    connectionString: process.env.NEON_DATABASE_URI,
+    // connectionString: process.env.NEON_DATABASE_URI,
+    host: 'localhost',
+    database: 'blog',
+    port: 5432,
+    user: 'postgres',
+    password: '1234',
   },
   out: 'drizzle',
 })
