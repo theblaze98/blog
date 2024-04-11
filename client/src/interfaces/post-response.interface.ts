@@ -2,9 +2,9 @@ export interface IPostsResponse {
     id:        string;
     title:     string;
     content:   string;
-    imageUrl:  null;
+    imageUrl:  string | undefined;
     authorId:  string;
-    createdAt: Date;
+    createdAt: string;
     author:    Author;
 }
 

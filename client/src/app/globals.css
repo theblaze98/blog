@@ -1,3 +1,26 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+	.profile-img-button {
+		@apply cursor-pointer;
+		& img {
+			@apply filter cursor-pointer transition-all duration-250 hover:blur-sm;
+			transition: filter ease 0.7s;
+		}
+		&:hover img {
+			filter: blur(2px);
+		}
+		&::after {
+			@apply text-sm absolute blur-0;
+			content: 'Ver';
+      display: none;
+      transition: display ease 1s;
+		}
+
+    &:hover::after {
+      display: block;
+    }
+	}
+}

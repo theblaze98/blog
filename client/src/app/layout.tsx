@@ -17,12 +17,19 @@ export default function RootLayout({
 	children: React.ReactNode
 }>) {
 	return (
-		<html lang='en' className='dark'>
+		<html
+			lang='en'
+			className='dark'>
 			<body
-				className={`${inter.className} bg-slate-900 text-white min-h-screen`}>
+				className={`${inter.className} bg-background text-foreground min-h-screen`}>
 				<Providers>
 					<Header />
 					{children}
+					<footer className='h-20 flex items-center justify-center'>
+						<h3 className='text-md text-foreground-500 text-center'>
+							Creado por Dionicio Vargas
+						</h3>
+					</footer>
 				</Providers>
 			</body>
 		</html>

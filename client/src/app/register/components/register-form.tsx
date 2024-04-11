@@ -1,11 +1,20 @@
 'use client'
-import { useRef, useState } from 'react'
+import { useContext, useRef, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { Input, Button, Card, CardHeader, CardBody, Avatar } from '@nextui-org/react'
-import { createUser, uploadAvatar } from '@/services'
-import { useForm } from 'react-hook-form'
+import {
+	Input,
+	Button,
+	Card,
+	CardHeader,
+	CardBody,
+	Avatar,
+} from '@nextui-org/react'
+import { useForm, Controller } from 'react-hook-form'
+import { createUser } from '@/services'
 import { PUBLIC_ROUTES } from '@/routes'
+import { UserContext } from '@/contexts/userContext'
+import { IUser } from '@/interfaces/user.interface'
 
 export type RegisterFormValues = {
 	username: string
@@ -16,22 +25,26 @@ export type RegisterFormValues = {
 
 export const RegisterForm = () => {
 	const router = useRouter()
+	const { setUser } = useContext(UserContext)
 	const [avatar, setAvatar] = useState('')
 	const avatarRef = useRef<HTMLInputElement>(null)
 	const {
 		register,
 		formState: { errors },
 		handleSubmit,
+		control,
 	} = useForm<RegisterFormValues>()
 
 	const onSubmit = async (data: RegisterFormValues) => {
-		console.log(data)
-		const userData = await createUser(data)
-		console.log(userData)
-		localStorage.setItem('token', userData.data.token)
-		const res = await uploadAvatar(data.avatarUrl[0], userData.data.token)
-		console.log(res)
-		router.push('/')
+		try {
+			const userData = await createUser(data)
+			console.log(userData)
+			localStorage.setItem('token', userData.data.token)
+			setUser(userData.data.user)
+			router.push('/')
+		} catch (error) {
+			console.log(error)
+		}
 	}
 
 	const onChangeFile = () => {
@@ -45,7 +58,7 @@ export const RegisterForm = () => {
 	return (
 		<Card className='max-w-sm w-full'>
 			<CardHeader>
-				<h2 className='text-2xl text-center'>Registrarse</h2>
+				<h2 className='text-2xl text-center w-full'>Registrarse</h2>
 			</CardHeader>
 			<CardBody>
 				<form
@@ -83,18 +96,32 @@ export const RegisterForm = () => {
 						errorMessage={!!errors.password && 'Ingrese un username'}
 					/>
 					<div>
-						<label htmlFor='avatar' className='flex gap-3 items-center cursor-pointer'>
-							<Avatar src={avatar} size='lg' />
+						<label
+							htmlFor='avatar'
+							className='flex gap-3 items-center cursor-pointer'>
+							<Avatar
+								src={avatar}
+								size='lg'
+							/>
 							<span className='text-sm text-blue-400'>Imagen de Perfil</span>
 						</label>
-						<input
-							{...register('avatarUrl', { required: true, minLength: 4 })}
-							type='file'
-							accept='image/*'
-							className='hidden'
-							id='avatar'
-							ref={avatarRef}
-							onChange={onChangeFile}
+						<Controller
+							name='avatarUrl'
+							control={control}
+							render={({ field }) => (
+								<input
+									{...register('avatarUrl', { required: true, minLength: 4 })}
+									type='file'
+									accept='image/*'
+									className='hidden'
+									id='avatar'
+									ref={avatarRef}
+									onChange={e => {
+										field.onChange(e.target.files)
+										onChangeFile()
+									}}
+								/>
+							)}
 						/>
 					</div>
 					<Button

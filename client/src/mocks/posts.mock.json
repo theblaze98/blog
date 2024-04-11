@@ -1,0 +1,98 @@
+[
+	{
+		"id": 1,
+		"title": "Post 1",
+		"content": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Id inventore nisi pariatur similique beatae cupiditate, doloremque totam earum doloribus ipsa architecto, perferendis assumenda? Velit, voluptate aperiam vero reiciendis totam hic earum. Velit, eveniet totam. Possimus magnam quas debitis soluta omnis, mollitia laudantium quam ipsum esse facilis rerum minus maxime, magni asperiores et impedit libero sit non earum nemo voluptatum fuga repellat? Nesciunt vel consectetur commodi magni cupiditate repellat aperiam voluptates quis, soluta adipisci corporis recusandae veniam provident iste! Eos ducimus iure soluta, sunt qui, eaque corrupti, esse impedit non iusto ea minima quia. Neque placeat voluptatum sed impedit incidunt nihil!",
+		"imageUrl": "/postimg.jpg",
+		"authorId": 1,
+		"createdAt": "2022-02-12",
+		"author": {
+			"avatarUrl": "/avatar1.jpeg",
+			"username": "User 1"
+		}
+	},
+	{
+		"id": 2,
+		"title": "Post 2",
+		"content": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Id inventore nisi pariatur similique beatae cupiditate, doloremque totam earum doloribus ipsa architecto, perferendis assumenda? Velit, voluptate aperiam vero reiciendis totam hic earum. Velit, eveniet totam. Possimus magnam quas debitis soluta omnis, mollitia laudantium quam ipsum esse facilis rerum minus maxime, magni asperiores et impedit libero sit non earum nemo voluptatum fuga repellat? Nesciunt vel consectetur commodi magni cupiditate repellat aperiam voluptates quis, soluta adipisci corporis recusandae veniam provident iste! Eos ducimus iure soluta, sunt qui, eaque corrupti, esse impedit non iusto ea minima quia. Neque placeat voluptatum sed impedit incidunt nihil!",
+		"imageUrl": "/postimg1.jpg",
+		"authorId": 1,
+		"createdAt": "2022-02-12",
+		"author": {
+			"avatarUrl": "/avatar1.jpeg",
+			"username": "User 1"
+		}
+	},
+	{
+		"id": 3,
+		"title": "Post 3",
+		"content": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Id inventore nisi pariatur similique beatae cupiditate, doloremque totam earum doloribus ipsa architecto, perferendis assumenda? Velit, voluptate aperiam vero reiciendis totam hic earum. Velit, eveniet totam. Possimus magnam quas debitis soluta omnis, mollitia laudantium quam ipsum esse facilis rerum minus maxime, magni asperiores et impedit libero sit non earum nemo voluptatum fuga repellat? Nesciunt vel consectetur commodi magni cupiditate repellat aperiam voluptates quis, soluta adipisci corporis recusandae veniam provident iste! Eos ducimus iure soluta, sunt qui, eaque corrupti, esse impedit non iusto ea minima quia. Neque placeat voluptatum sed impedit incidunt nihil!",
+		"imageUrl": "/postimg.png",
+		"authorId": 1,
+		"createdAt": "2022-02-12",
+		"author": {
+			"avatarUrl": "/avatar2.jpeg",
+			"username": "User 1"
+		}
+	},
+	{
+		"id": 4,
+		"title": "Post 4",
+		"content": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Id inventore nisi pariatur similique beatae cupiditate, doloremque totam earum doloribus ipsa architecto, perferendis assumenda? Velit, voluptate aperiam vero reiciendis totam hic earum. Velit, eveniet totam. Possimus magnam quas debitis soluta omnis, mollitia laudantium quam ipsum esse facilis rerum minus maxime, magni asperiores et impedit libero sit non earum nemo voluptatum fuga repellat? Nesciunt vel consectetur commodi magni cupiditate repellat aperiam voluptates quis, soluta adipisci corporis recusandae veniam provident iste! Eos ducimus iure soluta, sunt qui, eaque corrupti, esse impedit non iusto ea minima quia. Neque placeat voluptatum sed impedit incidunt nihil!",
+		"imageUrl": "/postimg2.jpg",
+		"authorId": 1,
+		"createdAt": "2022-02-12",
+		"author": {
+			"avatarUrl": "/avatar1.jpeg",
+			"username": "User 1"
+		}
+	},
+	{
+		"id": 5,
+		"title": "Post 5",
+		"content": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Id inventore nisi pariatur similique beatae cupiditate, doloremque totam earum doloribus ipsa architecto, perferendis assumenda? Velit, voluptate aperiam vero reiciendis totam hic earum. Velit, eveniet totam. Possimus magnam quas debitis soluta omnis, mollitia laudantium quam ipsum esse facilis rerum minus maxime, magni asperiores et impedit libero sit non earum nemo voluptatum fuga repellat? Nesciunt vel consectetur commodi magni cupiditate repellat aperiam voluptates quis, soluta adipisci corporis recusandae veniam provident iste! Eos ducimus iure soluta, sunt qui, eaque corrupti, esse impedit non iusto ea minima quia. Neque placeat voluptatum sed impedit incidunt nihil!",
+		"imageUrl": "/postimg3.jpg",
+		"authorId": 1,
+		"createdAt": "2022-02-12",
+		"author": {
+			"avatarUrl": "/avatar1.jpeg",
+			"username": "User 1"
+		}
+	},
+	{
+		"id": 6,
+		"title": "Post 6",
+		"content": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Id inventore nisi pariatur similique beatae cupiditate, doloremque totam earum doloribus ipsa architecto, perferendis assumenda? Velit, voluptate aperiam vero reiciendis totam hic earum. Velit, eveniet totam. Possimus magnam quas debitis soluta omnis, mollitia laudantium quam ipsum esse facilis rerum minus maxime, magni asperiores et impedit libero sit non earum nemo voluptatum fuga repellat? Nesciunt vel consectetur commodi magni cupiditate repellat aperiam voluptates quis, soluta adipisci corporis recusandae veniam provident iste! Eos ducimus iure soluta, sunt qui, eaque corrupti, esse impedit non iusto ea minima quia. Neque placeat voluptatum sed impedit incidunt nihil!",
+		"imageUrl": "/postimg4.jpg",
+		"authorId": 1,
+		"createdAt": "2022-02-12",
+		"author": {
+			"avatarUrl": "/avatar1.jpeg",
+			"username": "User 1"
+		}
+	},
+	{
+		"id": 7,
+		"title": "Post 7",
+		"content": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Id inventore nisi pariatur similique beatae cupiditate, doloremque totam earum doloribus ipsa architecto, perferendis assumenda? Velit, voluptate aperiam vero reiciendis totam hic earum. Velit, eveniet totam. Possimus magnam quas debitis soluta omnis, mollitia laudantium quam ipsum esse facilis rerum minus maxime, magni asperiores et impedit libero sit non earum nemo voluptatum fuga repellat? Nesciunt vel consectetur commodi magni cupiditate repellat aperiam voluptates quis, soluta adipisci corporis recusandae veniam provident iste! Eos ducimus iure soluta, sunt qui, eaque corrupti, esse impedit non iusto ea minima quia. Neque placeat voluptatum sed impedit incidunt nihil!",
+		"imageUrl": "/postimg5.jpg",
+		"authorId": 1,
+		"createdAt": "2022-02-12",
+		"author": {
+			"avatarUrl": "/avatar1.jpeg",
+			"username": "User 1"
+		}
+	},
+	{
+		"id": 8,
+		"title": "Post 8",
+		"content": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Id inventore nisi pariatur similique beatae cupiditate, doloremque totam earum doloribus ipsa architecto, perferendis assumenda? Velit, voluptate aperiam vero reiciendis totam hic earum. Velit, eveniet totam. Possimus magnam quas debitis soluta omnis, mollitia laudantium quam ipsum esse facilis rerum minus maxime, magni asperiores et impedit libero sit non earum nemo voluptatum fuga repellat? Nesciunt vel consectetur commodi magni cupiditate repellat aperiam voluptates quis, soluta adipisci corporis recusandae veniam provident iste! Eos ducimus iure soluta, sunt qui, eaque corrupti, esse impedit non iusto ea minima quia. Neque placeat voluptatum sed impedit incidunt nihil!",
+		"imageUrl": "/postimg6.jpg",
+		"authorId": 1,
+		"createdAt": "2022-02-12",
+		"author": {
+			"avatarUrl": "/avatar1.jpeg",
+			"username": "User 1"
+		}
+	}
+]
