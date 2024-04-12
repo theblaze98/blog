@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation'
 import { Input, Button, Card, CardHeader, CardBody } from '@nextui-org/react'
 import { useForm } from 'react-hook-form'
 import { PUBLIC_ROUTES } from '@/routes'
-import { UserContext } from '@/contexts/userContext'
 import { login as loginService } from '@/services'
 import { useAuthContext } from '@/contexts/authContext'
 
@@ -16,7 +15,6 @@ export type LoginFormValues = {
 
 export const LoginForm = () => {
 	const router = useRouter()
-	const { setUser } = useContext(UserContext)
 	const {
 		register,
 		formState: { errors },
@@ -27,20 +25,9 @@ export const LoginForm = () => {
 
 	const onSubmit = async (data: LoginFormValues) => {
 		console.log(data)
-		setUser({
-			id: crypto.randomUUID(),
-			username: 'test',
-			email: 'test@gamil.com',
-			avatarUrl: '/avatar1.jpeg',
-			role: 'admin',
-			createdAt: new Date(),
-		})
-		router.push('/')
 		try {
 			const userData = await loginService(data)
 			console.log(userData)
-			localStorage.setItem('token', userData.data.token)
-			setUser(userData.data.user)
 			login(userData.data.token)
 			router.push('/')
 		} catch (error) {

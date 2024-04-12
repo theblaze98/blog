@@ -15,12 +15,13 @@ import {
 	Button
 } from '@nextui-org/react'
 import { PUBLIC_ROUTES } from '@/routes'
-import { UserContext } from '@/contexts/userContext'
-import { IUser } from '@/interfaces/user.interface'
+import { useUserContext } from '@/contexts/userContext'
+import { useAuthContext } from '@/contexts/authContext'
 
 export const Header = () => {
 	const router = useRouter()
-	const { user, setUser } = useContext(UserContext)
+	const { user } = useUserContext()
+	const { logout } = useAuthContext()
 	return (
 		<header className='flex justify-between h-20 py-3 px-5'>
 			<Link
@@ -56,9 +57,8 @@ export const Header = () => {
 									<ButtonGroup>
 										<Button>Editar Perfil</Button>
 										<Button onClick={() => {
-											localStorage.removeItem('token')
+											logout()
 											router.push(PUBLIC_ROUTES.LOGIN)
-											setUser(null)
 										}}>Cerrar Sesion</Button>
 									</ButtonGroup>
 								</CardFooter>

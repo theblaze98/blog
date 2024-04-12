@@ -1,14 +1,9 @@
 'use client'
-import {
-	createContext,
-	useContext,
-	useCallback,
-	useMemo,
-} from 'react'
+import { createContext, useContext, useState } from 'react'
 import Cookies from 'js-cookie'
 
 interface IAuthContext {
-	login: (authToken: string) => void
+	login: (token: string) => void
 	logout: () => void
 	authToken?: string
 }
@@ -16,20 +11,21 @@ interface IAuthContext {
 export const AuthContext = createContext<IAuthContext>({} as IAuthContext)
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-	const login = useCallback((authToken: string) => {
-		Cookies.set('token', authToken)
-	}, [])
+	const [authToken, setAuthToken] = useState(Cookies.get('token'))
 
-	const logout = useCallback(() => {
+	const login = (token: string) => {
+		Cookies.set('token', token)
+		setAuthToken(token)
+	}
+
+	const logout = () => {
 		Cookies.remove('token')
-	}, [])
+		setAuthToken(undefined)
+	}
 
-	const values = useMemo(
-		() => ({ login, logout, authToken: Cookies.get('token') }),
-		[login, logout]
-	)
+	const values = { login, logout, authToken }
 
 	return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>
 }
 
-export const useAuthContext = () => (useContext(AuthContext))
+export const useAuthContext = () => useContext(AuthContext)

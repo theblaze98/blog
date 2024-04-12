@@ -13,8 +13,7 @@ import {
 import { useForm, Controller } from 'react-hook-form'
 import { createUser } from '@/services'
 import { PUBLIC_ROUTES } from '@/routes'
-import { UserContext } from '@/contexts/userContext'
-import { IUser } from '@/interfaces/user.interface'
+import { useAuthContext } from '@/contexts/authContext'
 
 export type RegisterFormValues = {
 	username: string
@@ -25,9 +24,9 @@ export type RegisterFormValues = {
 
 export const RegisterForm = () => {
 	const router = useRouter()
-	const { setUser } = useContext(UserContext)
 	const [avatar, setAvatar] = useState('')
 	const avatarRef = useRef<HTMLInputElement>(null)
+	const { login } = useAuthContext()
 	const {
 		register,
 		formState: { errors },
@@ -39,8 +38,7 @@ export const RegisterForm = () => {
 		try {
 			const userData = await createUser(data)
 			console.log(userData)
-			localStorage.setItem('token', userData.data.token)
-			setUser(userData.data.user)
+			login(userData.data.token)
 			router.push('/')
 		} catch (error) {
 			console.log(error)
