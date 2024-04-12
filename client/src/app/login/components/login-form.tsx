@@ -6,7 +6,8 @@ import { Input, Button, Card, CardHeader, CardBody } from '@nextui-org/react'
 import { useForm } from 'react-hook-form'
 import { PUBLIC_ROUTES } from '@/routes'
 import { UserContext } from '@/contexts/userContext'
-import { login } from '@/services'
+import { login as loginService } from '@/services'
+import { useAuthContext } from '@/contexts/authContext'
 
 export type LoginFormValues = {
 	email: string
@@ -22,6 +23,8 @@ export const LoginForm = () => {
 		handleSubmit,
 	} = useForm<LoginFormValues>()
 
+	const { login } = useAuthContext()
+
 	const onSubmit = async (data: LoginFormValues) => {
 		console.log(data)
 		setUser({
@@ -34,10 +37,11 @@ export const LoginForm = () => {
 		})
 		router.push('/')
 		try {
-			const userData = await login(data)
+			const userData = await loginService(data)
 			console.log(userData)
 			localStorage.setItem('token', userData.data.token)
 			setUser(userData.data.user)
+			login(userData.data.token)
 			router.push('/')
 		} catch (error) {
 			console.log(error)

@@ -2,13 +2,16 @@
 import { useRouter } from 'next/navigation'
 import { NextUIProvider } from '@nextui-org/react'
 import { UserProvider } from '@/contexts/userProvider'
+import { AuthProvider } from '@/contexts/authContext'
 
 export const Providers = ({ children }: { children: React.ReactNode }) => {
 	const router = useRouter()
 
 	return (
 		<NextUIProvider navigate={router.push}>
-			<UserProvider>{children}</UserProvider>
+			<AuthProvider>
+				<UserProvider>{children}</UserProvider>
+			</AuthProvider>
 		</NextUIProvider>
 	)
 }
