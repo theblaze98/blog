@@ -4,9 +4,11 @@ import {
   Post,
   Body,
   Get,
+  Param,
   UseGuards,
   UseInterceptors,
   UploadedFile,
+  ParseUUIDPipe,
 } from '@nestjs/common'
 import { FileInterceptor } from '@nestjs/platform-express'
 import { PostService } from './post.service'
@@ -23,8 +25,13 @@ export class PostController {
   ) {}
 
   @Get()
-  find() {
-    return this.postService.find()
+  async find() {
+    return await this.postService.find()
+  }
+
+  @Get(':id')
+  async findById(@Param('id', new ParseUUIDPipe({ version: '4' })) id: string) {
+    return await this.postService.findById(id)
   }
 
   @UseGuards(AuthGuard)

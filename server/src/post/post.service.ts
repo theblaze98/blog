@@ -1,10 +1,11 @@
-import { DRIZZLE_PROVIDE } from '@/helpers'
 import { Injectable, Inject } from '@nestjs/common'
+import { eq } from 'drizzle-orm'
 import { NeonHttpDatabase } from 'drizzle-orm/neon-http'
 import { v4 as uuid } from 'uuid'
+import { DRIZZLE_PROVIDE } from '@/helpers'
 import * as schema from '@/drizzle/schemas'
 import { postTable } from '@/drizzle/schemas'
-import { CreatePostDto } from '@/user/dto/create-user.dto'
+import { CreatePostDto } from '@/post/dto/create-post.dto'
 
 @Injectable()
 export class PostService {
@@ -13,7 +14,14 @@ export class PostService {
   ) {}
 
   async find() {
-    return this.db.query.postTable.findMany({
+    return await this.db.query.postTable.findMany({
+      with: { author: { columns: { avatarUrl: true, username: true } } },
+    })
+  }
+
+  async findById(id: string) {
+    return await this.db.query.postTable.findFirst({
+      where: eq(postTable.id, id),
       with: { author: { columns: { avatarUrl: true, username: true } } },
     })
   }
