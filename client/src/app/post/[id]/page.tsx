@@ -1,11 +1,28 @@
 'use client'
+import { useEffect, useState } from 'react'
 import { useParams } from 'next/navigation'
 import { Avatar, Divider, Image } from '@nextui-org/react'
-import posts from '@/mocks/posts.mock.json'
+import { getPostById } from '@/services/post.service'
+import { IPostsResponse } from '@/interfaces'
 
 export default function Page() {
 	const { id } = useParams()
-	const post = posts.filter(post => post.id === Number(id)).shift()
+	const [post, setPost] = useState<IPostsResponse>()
+
+	const getPost = async () => {
+		try {
+			const data = await getPostById(`${id}`)
+			console.log(data)
+			setPost(data)
+		} catch (error) {
+			console.log(error)
+		}
+	}
+
+	useEffect(() => {
+		getPost()
+	})
+
 	return (
 		<main className='w-11/12 max-w-5xl mx-auto min-h-[calc(100vh-160px)]'>
 			<div className='flex justify-between items-center'>

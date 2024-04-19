@@ -20,7 +20,7 @@ import { useAuthContext } from '@/contexts/authContext'
 
 export const Header = () => {
 	const router = useRouter()
-	const { user } = useUserContext()
+	const { user, setUser } = useUserContext()
 	const { logout } = useAuthContext()
 	return (
 		<header className='flex justify-between h-20 py-3 px-5'>
@@ -58,6 +58,7 @@ export const Header = () => {
 										<Button>Editar Perfil</Button>
 										<Button onClick={() => {
 											logout()
+											setUser(null)
 											router.push(PUBLIC_ROUTES.LOGIN)
 										}}>Cerrar Sesion</Button>
 									</ButtonGroup>

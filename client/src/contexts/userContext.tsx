@@ -17,16 +17,19 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 	const { authToken } = useAuthContext()
 
 	useEffect(() => {
-		const getUserByToken = async () => {
-			try {
-				const userData = await getUserData(authToken || '')
-				SetUser(userData.data)
-			} catch (error) {
-				SetUser(null)
-			}
+	const getUserByToken = async () => {
+		if (!authToken) {
+			return;
 		}
-		getUserByToken()
-	}, [authToken])
+		try {
+			const userData = await getUserData(authToken)
+			SetUser(userData.data)
+		} catch (error) {
+			SetUser(null)
+		}
+	}
+	getUserByToken()
+}, [authToken])
 
 	const setUser = (user: IUser | null) => {
 		SetUser(user)
